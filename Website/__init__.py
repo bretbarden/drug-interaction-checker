@@ -8,27 +8,27 @@ from flask_login import LoginManager
 db = SQLAlchemy()
 MEDS_REF_DATABASE = "database.db"
 
+
 def create_app():
     app = Flask(__name__)
     app.config["SECRET_KEY"] = "catdogcatdog"
-    app.config["SQLALCHEMY_DATABSE_URI"] = f"sqlite:///{MEDS_REF_DATABASE}"
-    db.init_app
+    app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{MEDS_REF_DATABASE}"
+    db.init_app(app)
 
 
     from .views import views
     from .auth import auth
 
 
-    app.register_blueprint(views, url_prefix="/home")
+    app.register_blueprint(views, url_prefix="/")
     app.register_blueprint(auth, url_prefix="/")
 
-    from .models import UserAccount, Medications, Queries
+    from .models import User, Medication, Query
 
     with app.app_context():
         db.create_all()
 
-    # create_database(app)
-
+   
 
     login_manager = LoginManager()
     login_manager.login_view = "auth.login"
@@ -36,14 +36,14 @@ def create_app():
 
     @login_manager.user_loader
     def load_member(id):
-        return Member.query.get(int(id))
-
+        return User.query.get(int(id))
+    
     return app
 
 def create_database(app):
-    if not path.exists("website/" + BIKE_SHARE_DB):
+    if not path.exists("Website/" + MEDS_REF_DATABASE):
         db.create_all(app=app)
-        print("")
+        print("Databse created")
 
 
 
