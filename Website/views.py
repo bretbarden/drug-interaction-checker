@@ -2,7 +2,7 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_required, current_user
 import requests
-# from .models import Bike
+from .models import  Query
 from . import db
 
 views = Blueprint("views", __name__)
@@ -22,6 +22,11 @@ def home():
 
 
         responseB = requests.get(f"https://api.fda.gov/drug/label.json/?api_key=1tBoJ0npQzVMLDVsMWgzHVqySLpyrzSyfGk8EhsO&search=openfda.generic_name:{medicationB}").json()["results"][0]["drug_interactions"][0]
+
+        query = Query(medicationA=medicationA, medicationB=medicationB, user_id=current_user.id)
+        db.session.add(query)
+        db.session.commit()
+        print(query)
 
         return f"{responseA} + 'FIILLER FILLER FILLER' {responseB}"
 
