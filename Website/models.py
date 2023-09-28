@@ -20,7 +20,7 @@ class User(db.Model, UserMixin, SerializerMixin):
      # Set up relationships
     queries = db.relationship('Query', back_populates = 'user')
     # Associations
-    medications = association_proxy('queries', 'note')
+    notes = association_proxy('queries', 'note')
     # Serialize Rules
     serialize_rules = ('-queries.user',)
 
