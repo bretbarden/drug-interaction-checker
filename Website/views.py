@@ -11,6 +11,7 @@ views = Blueprint("views", __name__)
 @login_required
 def home():
     print ("Hi I am a route")
+    query = None
     if request.method == "POST":
         medicationA = request.form.get("medicationA").strip() if request.form.get("medicationA") else None
         medicationB = request.form.get("medicationB").strip() if request.form.get("medicationB") else None
@@ -23,18 +24,16 @@ def home():
 
         responseB = requests.get(f"https://api.fda.gov/drug/label.json/?api_key=1tBoJ0npQzVMLDVsMWgzHVqySLpyrzSyfGk8EhsO&search=openfda.generic_name:{medicationB}").json()["results"][0]["drug_interactions"][0]
 
-        query = Query(medicationA=medicationA, medicationB=medicationB, user_id=current_user.id)
+
+        query = Query(medicationA=medicationA, medicationB=medicationB, interactionA=responseA, interactionB= responseB, user_id=current_user.id)
         db.session.add(query)
         db.session.commit()
         print(query)
 
-        return f"{responseA} + 'FIILLER FILLER FILLER' {responseB}"
+        # return f"{responseA} + 'FIILLER FILLER FILLER' {responseB}"
 
 
-      
-
-
-    return render_template("home.html", user=current_user)
+    return render_template("home.html", user=current_user, query=query)
 
 
 

@@ -43,7 +43,7 @@ def create_app():
 def create_database(app):
     if not path.exists("Website/" + MEDS_REF_DATABASE):
         db.create_all(app=app)
-        print("Databse created")
+        print("Database created")
 
 
 

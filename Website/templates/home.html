@@ -33,7 +33,12 @@
 
     <button align="center" type="submit" id="check-drugs" class="btn btn-primary">Check Meds Query</button>
     
-
 </form>
+
+{% if user.is_authenticated %}
+    {% if query %}
+    {{query}}
+    {% endif %}
+{% endif %}
 
 {% endblock %}

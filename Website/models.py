@@ -45,6 +45,9 @@ class Query(db.Model, UserMixin, SerializerMixin):
     medicationA = db.Column(db.String, nullable=False)
     medicationB = db.Column(db.String, nullable=True)
 
+    interactionA = db.Column(db.String, nullable=False)
+    interactionB = db.Column(db.String, nullable=True)
+
     # Foreign Keys
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     medication_id = db.Column(db.Integer, db.ForeignKey('medication.id'))
