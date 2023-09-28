@@ -10,21 +10,25 @@
 <table border="1">
     <thead>
         <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Age</th>            
+            <th>Saved Search</th>
+            <th>Medication A</th>
+            <th>Medication B</th>
+            <th>Interaction A</th>
+            <th>Interaction B</th>
+
         </tr>
-        <tbody>
-            {% for user in users %}
-            <tr>
-                <td>{{user.id}}</td>
-                <td>{{user.name}}</td>
-                <td>insert query line</td>
-                
-            </tr>
-            {% endfor %}
-        </tbody>
     </thead>
+    <tbody>
+        {% for query in queries %}
+        <tr>
+            <td>{{query.id}}</td>
+            <td>{{query.medicationA}}</td>
+            <td>{{query.medicationB}}</td>
+            <td>{{query.interactionA}}</td>
+            <td>{{query.interactionB}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
 </table>
 {% endif %}
 
