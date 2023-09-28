@@ -1,0 +1,31 @@
+{% extends "base.html" %} {% block title %}queriesqueriesQUERIESqueriesqueries{% endblock %}
+
+{% block content %}
+<h1 align="center">Pez</h1>
+
+{% if user.is_authenticated %}
+
+<h1>HELLO WORLD</h1>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Age</th>            
+        </tr>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{user.id}}</td>
+                <td>{{user.name}}</td>
+                <td>insert query line</td>
+                
+            </tr>
+            {% endfor %}
+        </tbody>
+    </thead>
+</table>
+{% endif %}
+
+{% endblock %}
