@@ -96,11 +96,13 @@ def home():
 @views.route("/queries", methods=["GET", "POST"])
 @login_required
 def checkqueries():
-    if request == "GET":
-        users = User.query.all()
-        return jsonify([{"id": u.id, "username": u.username} for u in users])
-    return render_template("queries.html", user=current_user )
-
+    if request.method == "GET":
+    #     users = User.query.all()
+    #     return jsonify([{"id": u.id, "username": u.username} for u in users])
+    # return render_template("queries.html", user=current_user)
+        queries = Query.query.all()
+        # return jsonify([{"id": q.id, "medicationA": q.medicationA} for q in querries])
+    return render_template("queries.html", user=current_user, queries = queries)
     
 
 
