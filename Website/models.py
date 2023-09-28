@@ -5,7 +5,11 @@ from flask_login import UserMixin
 from sqlalchemy.sql import func
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy_serializer import SerializerMixin
+from datetime import datetime
 from . import db
+
+
+
 
 class User(db.Model, UserMixin, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -16,25 +20,25 @@ class User(db.Model, UserMixin, SerializerMixin):
      # Set up relationships
     queries = db.relationship('Query', back_populates = 'user')
     # Associations
-    medications = association_proxy('queries', 'medication')
+    medications = association_proxy('queries', 'note')
     # Serialize Rules
     serialize_rules = ('-queries.user',)
 
+def get_current_date():
+    return datetime.utcnow().strftime('%Y-%m-%d')
 
-
-class Medication(db.Model, UserMixin, SerializerMixin):
+class Note(db.Model, UserMixin, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
-    brand_name = db.Column(db.String, nullable=False)
-    generic_name = db.Column(db.String, nullable=False)
-    known_interactions = db.Column(db.String, nullable=False)
+    datesubmit = db.Column(db.String, nullable=False, default=get_current_date)
+    text = db.Column(db.String(600), nullable=False)
 
     # Set up relationships
-    queries = db.relationship('Query', back_populates = 'medication')
+    queries = db.relationship('Query', back_populates = 'note')
     # Associations
     users = association_proxy('queries', 'user')
 
     # Serialize Rules
-    serialize_rules = ('-queries.medication',)
+    serialize_rules = ('-queries.note',)
 
     
 
@@ -50,12 +54,12 @@ class Query(db.Model, UserMixin, SerializerMixin):
 
     # Foreign Keys
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    medication_id = db.Column(db.Integer, db.ForeignKey('medication.id'))
+    note_id = db.Column(db.Integer, db.ForeignKey('note.id'))
     # Set up relationships
     user = db.relationship("User", back_populates = 'queries')
-    medication = db.relationship("Medication", back_populates = 'queries')
+    note = db.relationship("Note", back_populates = 'queries')
     # Serialize Rules
-    serialize_rules = ('-user.queries', '-medication.queries')
+    serialize_rules = ('-user.queries', '-note.queries')
 
 
  

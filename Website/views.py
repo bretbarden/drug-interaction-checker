@@ -28,7 +28,8 @@ def home():
         query = Query(medicationA=medicationA, medicationB=medicationB, interactionA=responseA, interactionB= responseB, user_id=current_user.id)
         db.session.add(query)
         db.session.commit()
-        print(query)
+        # print(query.interactionB)
+        # return query.interactionB
 
         # return f"{responseA} + 'FIILLER FILLER FILLER' {responseB}"
 
