@@ -100,7 +100,7 @@ def checkqueries():
     #     users = User.query.all()
     #     return jsonify([{"id": u.id, "username": u.username} for u in users])
     # return render_template("queries.html", user=current_user)
-        queries = Query.query.all()
+        queries = Query.query.filter_by(user_id=current_user.id).all()
         # return jsonify([{"id": q.id, "medicationA": q.medicationA} for q in querries])
     return render_template("queries.html", user=current_user, queries = queries)
     
