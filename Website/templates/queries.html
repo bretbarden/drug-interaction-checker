@@ -14,22 +14,25 @@
             <th>Medication A</th>
             <th>Medication B</th>
             <th>Interaction A</th>
-            <th>Interaction B</th>
+            <th>Interaction B</th>            
 
         </tr>
-    </thead>
-    <tbody>
-        {% for query in queries %}
-        <tr>
-            <td>{{query.id}}</td>
-            <td>{{query.medicationA}}</td>
+</thead>
+        <tbody>
+            {% for query in queries %}
+            <tr>
+                <td>{{query.id}}</td>
+                <td>{{query.medicationA}}</td>
             <td>{{query.medicationB}}</td>
-            <td>{{query.interactionA}}</td>
+                <td>{{query.interactionA}}</td>
             <td>{{query.interactionB}}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+                            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% endif %}
 
 {% endblock %}
+
+<!-- TO DO: 
+creat a form element block somewhere here to sccept a note, make it collapisoble with bootstrap, then add relevant table elements so that it shows -->
