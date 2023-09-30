@@ -45,13 +45,18 @@ class Note(db.Model, UserMixin, SerializerMixin):
     datesubmit = db.Column(db.String, nullable=False, default=get_current_date)
     text = db.Column(db.String(600), nullable=False)
 
+
     # Set up relationships
-    queries = db.relationship('Query', back_populates = 'note')
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    query_id = db.Column(db.Integer, db.ForeignKey('query.id'))
+
+
+    queryRX = db.relationship('Query', back_populates = 'notes')
     # Associations
     users = association_proxy('queries', 'user')
 
     # Serialize Rules
-    serialize_rules = ('-queries.note',)
+    serialize_rules = ('-queryRX.notes',)
 
     
 
@@ -67,10 +72,10 @@ class Query(db.Model, UserMixin, SerializerMixin):
 
     # Foreign Keys
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    note_id = db.Column(db.Integer, db.ForeignKey('note.id'))
+
     # Set up relationships
     user = db.relationship("User", back_populates = 'queries')
-    note = db.relationship("Note", back_populates = 'queries')
+    notes = db.relationship("Note", back_populates = 'queryRX')
     # Serialize Rules
     serialize_rules = ('-user.queries', '-note.queries')
 

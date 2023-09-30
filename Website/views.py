@@ -97,31 +97,49 @@ def home():
 @login_required
 def checkqueries():
     note = None
+    query_id = None
     if request.method == "GET":
         queries = Query.query.filter_by(user_id=current_user.id).all()
 
     elif request.method == "POST":
-        # query_id = request.form.get("query_id")
+        # query_id = request.form.get("data-query-id")
+        user_id = current_user.id
+        query_id = request.form.get("query_id") 
+        print("this is the query id", query_id)
+    
+
         # date = request.form.get("datesubmit")
         text = request.form.get("text")
         print(text)
 
         if text:
-            note = Note(text=text)
+            note = Note(text=text, user_id=user_id, query_id=query_id)
             db.session.add(note)
             db.session.commit()
             print("I AM A NOTE", note.text)
-        return redirect(url_for("views.showNotes"))
-    return render_template("queries.html", user=current_user, user_id=current_user.id, note=note)
+        return redirect(url_for("views.showmyNotes"))
+    return render_template("queries.html", user=current_user, user_id=current_user.id, note=note, queries=queries, query_id=query_id)
 
 
 
 
 
-@views.route("/notes", methods=["GET", "POST"])
+@views.route("/notes", methods=["GET"])
 @login_required
-def showNotes():
-        return render_template("notes.html", user=current_user)
+def showmyNotes():
+    notes = Note.query.all()
+    print(notes)
+    return render_template("notes.html", user=current_user, notes=notes)
+
+
+
+# @views.route("/community-notes", methods=["GET", "POST"])
+# @login_required
+# def showallNotes():
+        
+#         notes = Note.query.all()
+#         return render_template("notes.html", user=current_user, notes=notes)
+
 
     
 
