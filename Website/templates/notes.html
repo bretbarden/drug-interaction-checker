@@ -2,20 +2,22 @@
 
 {% block content %}
 <h1 align="center">On  second thought...</h1>
+<br>
+<br>
+
 
 
 
 {% if user.is_authenticated %}
 
 
-<ul>This is a list.
-
+<ul>
     {% for note in notes %}
 
     <div>
-        <p>Note ID: {{note.id}}</p>
+        <p class="d-inline p-2 bg-dark text-white">Note ID: {{note.id}}</p>
         <p>Date: {{note.datesubmit}}</p>
-        <p>Note: {{note.text}}</p>
+        <p class="lead">Note: {{note.text}}</p>
 
 
     {% endfor %}
