@@ -99,17 +99,20 @@ def checkqueries():
     note = None
     if request.method == "GET":
         queries = Query.query.filter_by(user_id=current_user.id).all()
-    elif request.method == "POST":
-            query_id = request.form.get("query_id")
-            date = request.form.get("datesubmit")
-            text = request.form.get(f"note_{query_id}")
 
-            if text:
-                note = Note(datesubmit=date, text=text)
-                db.session.add(note)
-                db.session.commit()
-            return redirect(url_for("views.notes"))
-    return render_template("queries.html", user=current_user, user_id=current_user.id, queries=queries, note=note )
+    elif request.method == "POST":
+        # query_id = request.form.get("query_id")
+        # date = request.form.get("datesubmit")
+        text = request.form.get("text")
+        print(text)
+
+        if text:
+            note = Note(text=text)
+            db.session.add(note)
+            db.session.commit()
+            print("I AM A NOTE", note.text)
+        return redirect(url_for("views.showNotes"))
+    return render_template("queries.html", user=current_user, user_id=current_user.id, note=note)
 
 
 
@@ -118,7 +121,7 @@ def checkqueries():
 @views.route("/notes", methods=["GET", "POST"])
 @login_required
 def showNotes():
-    return render_template("notes.html", user=current_user)
+        return render_template("notes.html", user=current_user)
 
     
 
