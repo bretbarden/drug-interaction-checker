@@ -1,0 +1,4 @@
+#scrollable-content {
+    max-height: 100px !important;
+    overflow-y: auto !important;
+}

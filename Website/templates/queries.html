@@ -5,27 +5,45 @@
 
 {% if user.is_authenticated %}
 
-<h1>HELLO WORLD</h1>
+<h1>the body is a temple, and life is a circus</h1>
 
-<table border="1">
-    <thead>
+<table class="table table-dark table-hover table-sm table-responsive" border="1">
+    <thead class="thead-light">
         <tr>
             <th>Saved Search</th>
             <th>Medication A</th>
             <th>Medication B</th>
             <th>Interaction A</th>
-            <th>Interaction B</th>            
+            <th>Interaction B</th> 
+            <th>Enter Note</th>            
+
 
         </tr>
 </thead>
-        <tbody>
+        <tbody class="overflow-auto">
             {% for query in queries %}
             <tr>
                 <td>{{query.id}}</td>
                 <td>{{query.medicationA}}</td>
             <td>{{query.medicationB}}</td>
-                <td>{{query.interactionA}}</td>
-            <td>{{query.interactionB}}</td>
+                <td id="scrollable-content">{{query.interactionA}}</td>
+            <td id="scrollable-content">{{query.interactionB}}</td>
+            <td>
+                <form>
+                <details>
+                    <summary>What if I told you...</summary>
+                    <input type="text" name="note_{{query.id}}" placeholder="Enter note for query # {{query.id}}" />
+                    <button class="save-note" data-query-id="{{query.id}}">Submit Note</button>
+                </details>
+                </form>
+
+                <!-- <details>
+                    <summary>What if i told you...</summary>
+                    <input type="text" name="note" placeholder="Enter note" />
+                    <button class="save-note" data-query-id=""
+                </details> -->
+            </td>
+
                             </tr>
             {% endfor %}
         </tbody>
