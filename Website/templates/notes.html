@@ -1,0 +1,31 @@
+{% extends "base.html" %} {% block title %} notesnotesNOTESnotesnotes {% endblock %}
+
+{% block content %}
+<h1 align="center">On  second thought...</h1>
+
+
+
+{% if user.is_authenticated %}
+
+
+<ul>This is a list.
+
+    {% for note in notes %}
+
+    <div>
+        <p>Note ID: {{note.id}}</p>
+        <p>Date: {{note.datesubmit}}</p>
+        <p>Note: {{note.text}}</p>
+
+
+    {% endfor %}
+    </div>
+    
+</ul>
+
+{% endif %}
+
+
+
+
+{% endblock %}

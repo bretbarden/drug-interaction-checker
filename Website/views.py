@@ -2,7 +2,7 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for, jsonify
 from flask_login import login_required, current_user
 import requests
-from .models import  Query, User
+from .models import  Query, User, Note
 from . import db
 
 views = Blueprint("views", __name__)
@@ -96,13 +96,51 @@ def home():
 @views.route("/queries", methods=["GET", "POST"])
 @login_required
 def checkqueries():
+    note = None
+    query_id = None
     if request.method == "GET":
-    #     users = User.query.all()
-    #     return jsonify([{"id": u.id, "username": u.username} for u in users])
-    # return render_template("queries.html", user=current_user)
         queries = Query.query.filter_by(user_id=current_user.id).all()
-        # return jsonify([{"id": q.id, "medicationA": q.medicationA} for q in querries])
-    return render_template("queries.html", user=current_user, queries = queries)
+
+    elif request.method == "POST":
+        # query_id = request.form.get("data-query-id")
+        user_id = current_user.id
+        query_id = request.form.get("query_id") 
+        print("this is the query id", query_id)
+    
+
+        # date = request.form.get("datesubmit")
+        text = request.form.get("text")
+        print(text)
+
+        if text:
+            note = Note(text=text, user_id=user_id, query_id=query_id)
+            db.session.add(note)
+            db.session.commit()
+            print("I AM A NOTE", note.text)
+        return redirect(url_for("views.showmyNotes"))
+    return render_template("queries.html", user=current_user, user_id=current_user.id, note=note, queries=queries, query_id=query_id)
+
+
+
+
+
+@views.route("/notes", methods=["GET"])
+@login_required
+def showmyNotes():
+    notes = Note.query.all()
+    print(notes)
+    return render_template("notes.html", user=current_user, notes=notes)
+
+
+
+# @views.route("/community-notes", methods=["GET", "POST"])
+# @login_required
+# def showallNotes():
+        
+#         notes = Note.query.all()
+#         return render_template("notes.html", user=current_user, notes=notes)
+
+
     
 
 
