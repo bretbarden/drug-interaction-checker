@@ -26,15 +26,16 @@
                 <td>{{query.id}}</td>
                 <td>{{query.medicationA}}</td>
             <td>{{query.medicationB}}</td>
-                <td id="scrollable-content">{{query.interactionA}}</td>
-            <td id="scrollable-content">{{query.interactionB}}</td>
+                <td><details>{{query.interactionA}}</details></td>
+            <td><details>{{query.interactionB}}</details></td>
             <td>
 
                 <form method="POST">
                 <details>
                     <summary>What if I told you...</summary>
                     <input type="text" name="text" placeholder="Enter note for query # {{query.id}}" />
-                    <button type="submit" class="save-note" data-user-id= "{{user.id}}"  >Submit Note</button>
+                    <input type ="hidden" name = "query_id"  value = "{{query.id}}" />
+                    <button type="submit" class="save-note" data-user-id= "{{user.id}}" data-query-id = "{{query.id}}" >Submit Note</button>
                 </details>
                 </form>
 
