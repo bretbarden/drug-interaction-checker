@@ -125,7 +125,7 @@ def checkqueries():
 
 
 @views.route("/notes", methods=["GET"])
-@login_required0
+@login_required
 def showmyNotes():
     notes = Note.query.all()
     print(notes)

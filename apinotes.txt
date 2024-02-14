@@ -1,0 +1,14 @@
+
+
+aspirin
+bupropion hydrochloride 
+alprazolam
+
+
+
+
+Potential fields
+# openfda.brand_name
+# openfda.generic_name
+# openfda.manufacturer_name
+# openfda.substance_name
